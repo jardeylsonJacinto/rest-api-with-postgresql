@@ -15,4 +15,8 @@ app.get('/users', (req, res)=>{
   client.end;
 })
 
-client.connect();
+app.get('/users/:id', (req, res)=>{
+  client.query('SELECT * FROM users WHERE id = $1', [req.params.id], (err, result)=>{
+    if(!err) res.send(result.rows);
+  });
+})
