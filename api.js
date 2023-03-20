@@ -7,3 +7,12 @@ app.listen(3333, ()=>{
 })
 
 client.connect();
+
+app.get('/users', (req, res)=>{
+  client.query('SELECT * FROM users', (err, result)=>{
+    if(!err) res.send(result.rows);
+  });
+  client.end;
+})
+
+client.connect();
