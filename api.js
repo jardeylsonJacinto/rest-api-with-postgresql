@@ -44,3 +44,12 @@ app.put('/users/:id', (req, res)=>{
   });
   client.end;
 })
+
+app.delete('/users/:id', (req, res)=>{
+  const insertQuery = `delete from users where id = ${req.params.id}`;
+  client.query(insertQuery, (err, result)=>{
+    if(!err) res.send('Deleted successfully');
+    else res.send(err);
+  });
+  client.end;
+})
