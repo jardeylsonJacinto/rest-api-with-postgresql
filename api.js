@@ -20,3 +20,13 @@ app.get('/users/:id', (req, res)=>{
     if(!err) res.send(result.rows);
   });
 })
+
+app.post('/users', (req,res)=>{
+  const user = req.body;
+  const insertQuery = `insert into users (id, first_name, last_name, location) values(${user.id}, ${user.first_name}, ${user.last_name}, ${user.location})`
+  client.query(insertQuery, (err, result)=>{
+    if(!err) res.send('Inserted successfully');
+    else res.send(err);
+  });
+  client.end;
+})
