@@ -1,6 +1,9 @@
+const bodyParser = require('bodyParser');
 const client = require('./connection.js');
 const express = require('express');
 const app = express();
+
+app.use(bodyParser.json());
 
 app.listen(3333, ()=>{
   console.log('listening on port 3333');
@@ -26,6 +29,17 @@ app.post('/users', (req,res)=>{
   const insertQuery = `insert into users (id, first_name, last_name, location) values(${user.id}, ${user.first_name}, ${user.last_name}, ${user.location})`
   client.query(insertQuery, (err, result)=>{
     if(!err) res.send('Inserted successfully');
+    else res.send(err);
+  });
+  client.end;
+})
+
+app.put('/users/:id', (req, res)=>{
+  const user = req.body;
+  const updateQuery = `update users set first_name = ${user.first_name}, last_name = ${user.last_name}, location = ${user.location} where id = ${user.id}`
+
+  client.query(updateQuery, (err, result)=>{
+    if(!err) res.send('Updated successfully');
     else res.send(err);
   });
   client.end;
